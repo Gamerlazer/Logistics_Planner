@@ -24,3 +24,14 @@
 # send query to google maps to print
 # https://developers.google.com/maps/documentation/static-maps/
 ## Google Developers API Key: AIzaSyCuwSzU40msMCb4KMN70WPnEc9sNwsikzs
+
+User Flow:
+Ask user what city
+Ask user what state
+
+Ask if they want to do a food or things to do search:
+	return food -> food route
+	return things to do -> things to do route
+
+Food Route:
+	Search Options

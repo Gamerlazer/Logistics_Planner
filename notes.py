@@ -28,3 +28,5 @@ key: API_KEY
 http://maps.googleapis.com/maps/api/staticmap?center=Australia&size=640x400&style=element:labels|visibility:off&style=element:geometry.stroke|visibility:off&style=feature:landscape|element:geometry|saturation:-100&style=feature:water|saturation:-100|invert_lightness:true&key=YOUR_API_KEY
 
 AIzaSyCuwSzU40msMCb4KMN70WPnEc9sNwsikzs
+
+
