@@ -2,6 +2,18 @@
 # dest_state = raw_input("What state is this? ")
 # dest_state_ab = dictionary
 
+# Open file with API Keys
+with open("api_key.txt") as yelp_api:
+	yelp_keys = yelp_api.readlines()
+
+# Convert keys to a list
+yelp_api_keys = []
+for k in yelp_keys:
+	yelp_api_keys.append(k.split(':')[1].replace('\n',''))
+
+# Save google API Key
+google_api_key = yelp_api_keys[4]
+
 # Restaurant searches 
 def yelp_rest_search(dest_city,dest_state_ab):
 	params = {}
