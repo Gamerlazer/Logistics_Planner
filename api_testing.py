@@ -13,10 +13,10 @@ def get_results(params):
 	return data
 
 
-biz(get_results(yelp_rest_search("san francisco","ca")))
+print biz(get_results(yelp_rest_search("san francisco","ca")))
 
 
-print Birba.display_address
+
 
 
 # print get_results(yelp_rest_search("san francisco","ca"))["businesses"][0]["name"]

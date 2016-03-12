@@ -47,6 +47,7 @@ class Business(object):
 		self.categories = categories
 		self.coordinate = coordinate
 
+biz_list_results = {}
 def biz(query):
 	biz_list_results = []
 	for biz in query["businesses"]:
@@ -70,6 +71,7 @@ def biz(query):
 				categories += cats[0]+", "
 		print categories+"\n"
 		biz["name"] = str(biz["name"]) #converts unicode to strings
-		biz_list_results.append(biz["name"]) #adds business to list
+		# biz_list_results.append(biz["name"]) #adds business to list
+		
 		biz["name"] = Business(biz["name"],address,biz["url"],categories,biz["location"]["coordinate"]) #creates a business class for each resturant
 	
