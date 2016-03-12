@@ -20,7 +20,7 @@ def yelp_rest_search(dest_city,dest_state_ab):
 	params["term"] = "restaurants"
 	params["location"] = dest_city+", "+dest_state_ab
 	params["sort"] = "2"
-	params["limit"] = "10"
+	params["limit"] = "5" # number of results
 	params["category_filter"] = "restaurants"
 	return params
 	
