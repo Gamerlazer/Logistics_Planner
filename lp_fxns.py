@@ -1,6 +1,3 @@
-# dest_city = raw_input("What city do you want to plan for? ")
-# dest_state = raw_input("What state is this? ")
-# dest_state_ab = dictionary
 
 # Open file with API Keys
 with open("api_key.txt") as yelp_api:
@@ -47,9 +44,9 @@ class Business(object):
 		self.categories = categories
 		self.coordinate = coordinate
 
-biz_list_results = {}
+
 def biz(query):
-	biz_list_results = []
+	biz_list_results = {}
 	for biz in query["businesses"]:
 		print biz["name"]
 		street = "" # Clean up address display
@@ -73,5 +70,6 @@ def biz(query):
 		biz["name"] = str(biz["name"]) #converts unicode to strings
 		# biz_list_results.append(biz["name"]) #adds business to list
 		
-		biz["name"] = Business(biz["name"],address,biz["url"],categories,biz["location"]["coordinate"]) #creates a business class for each resturant
-	
+		biz_list_results[biz["name"]] = Business(biz["name"],address,biz["url"],categories,biz["location"]["coordinate"]) #creates a business class for each resturant
+	return biz_list_results	
+
