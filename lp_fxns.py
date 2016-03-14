@@ -67,9 +67,9 @@ def biz(query):
 			else: 
 				categories += cats[0]+", "
 		print categories+"\n"
-		biz["name"] = str(biz["name"]) #converts unicode to strings
+		biz["name"] = str(biz["name"]) #converts unicode to strings 
 		# biz_list_results.append(biz["name"]) #adds business to list
-		
-		biz_list_results[biz["name"]] = Business(biz["name"],address,biz["url"],categories,biz["location"]["coordinate"]) #creates a business class for each resturant
+		coordinate = [biz["location"]["coordinate"]["latitude"],biz["location"]["coordinate"]["longitude"]]
+		biz_list_results[biz["name"]] = Business(biz["name"],address,biz["url"],categories,coordinate) #creates a business class for each resturant
 	return biz_list_results	
 
