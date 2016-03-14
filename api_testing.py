@@ -11,28 +11,28 @@ def get_results(params):
 	#Transforms the JSON API response into a Python dictionary
 	data = request.json()
 	return data
+	
 ### This part works! Get user city and state
 
-# dest_city = raw_input("What city do you want to plan for? ") # save the city
-# dest_state = raw_input("What state is this? ").lower() # save the state
+dest_city = raw_input("What city do you want to plan for? ") # save the city
+dest_state = raw_input("What state is this? ").lower() # save the state
 
-# # make sure user entry is a real state
-# valid_state = False
+# set dest_state_ab to the lowercase abrevation of state
+valid_state = False
 
-# while valid_state != True:
-# 	if dest_state in states:
-# 		dest_state_ab = dest_state
-# 		valid_state = True
-# 	elif dest_state in states_to_ab:
-# 		dest_state_ab = states_to_ab[dest_state]
-# 		valid_state = True
-# 	else:
-# 		dest_state = raw_input("Please enter a valid state ").lower()
+while valid_state != True:
+	if dest_state in states: # if user input is a valid state abs then set to dest_state_ab
+		dest_state_ab = dest_state
+		valid_state = True
+	elif dest_state in states_to_ab: # use state dic to convert to abrevation
+		dest_state_ab = states_to_ab[dest_state]
+		valid_state = True
+	else:
+		dest_state = raw_input("Please enter a valid state ").lower()
 
+biz(get_results(yelp_rest_search(dest_city,dest_state_ab)))
 
-# print biz(get_results(yelp_rest_search("san francisco","ca")))
-
-# lib  = biz(get_results(yelp_rest_search(dest_city,"ca"))) #creates a storage for results
+# lib  = biz(get_results(yelp_rest_search(dest_city,dest_state_ab))) #creates a storage for results
 
 
 # user_picks = []
