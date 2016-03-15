@@ -73,3 +73,16 @@ def biz(query):
 		biz_list_results[biz["name"]] = Business(biz["name"],address,biz["url"],categories,coordinate) #creates a business class for each resturant
 	return biz_list_results	
 
+def user_choices():
+	user_choice = raw_input("What restaurants did you want to visit? Type name of restaurant: ")
+	user_complete = False
+	while user_complete != True:
+		if user_choice in lib:
+			user_picks.append(lib[user_choice])
+			user_choice = raw_input("What other restaurants did you want to visit? When ready for your map, type exit when done with your choices: ")
+		elif user_choice in user_picks:
+			user_choice = raw_input("Oops you already picked that restaurant. Please choose another restaurant. When ready for your map, type exit when done with your choices: ")
+		elif user_choice == "exit":
+			user_complete = True
+		else:
+			user_choice = raw_input("Sorry that wasn't a choice, please try again: ")

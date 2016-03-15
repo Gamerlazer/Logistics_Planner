@@ -17,53 +17,81 @@ def get_results(params):
 	data = request.json()
 	return data
 
-### This part works! Get user city and state
-
-dest_city = raw_input("What city do you want to plan for? ") # save the city
-dest_state = raw_input("What state is this? ").lower() # save the state
-
-# set dest_state_ab to the lowercase abrevation of state
-valid_state = False
-
-while valid_state != True:
-	if dest_state in states: # if user input is a valid state abs then set to dest_state_ab
-		dest_state_ab = dest_state
-		valid_state = True
-	elif dest_state in states_to_ab: # use state dic to convert to abrevation
-		dest_state_ab = states_to_ab[dest_state]
-		valid_state = True
-	else:
-		dest_state = raw_input("Please enter a valid state ").lower()
-
-biz(get_results(yelp_rest_search(dest_city,dest_state_ab)))
-lib  = biz(get_results(yelp_rest_search(dest_city,dest_state_ab))) #creates a storage for results
 
 
+
+# biz(get_results(yelp_rest_search(dest_city,dest_state_ab)))
+# lib = biz(get_results(yelp_rest_search(dest_city,dest_state_ab))) #creates a storage for results
 
 ### Generates a list of user selected restuarants
 
 user_picks = []
-user_choice = raw_input("What restaurants did you want to visit? Type name of restaurant: ")
-user_complete = False
-while user_complete != True:
-	if user_choice in lib:
-		user_picks.append(lib[user_choice].name)
-		user_choice = raw_input("What other restaurants did you want to visit? When ready for your map, type exit when done with your choices: ")
-	elif user_choice in user_picks:
-		user_choice = raw_input("Oops you already picked that restaurant. Please choose another restaurant. When ready for your map, type exit when done with your choices: ")
-	elif user_choice == "exit":
-		user_complete = True
+
+def user_choice(dest_city, dest_state_ab,fxn_type,biz_name=None):
+	if biz_name != None:
+		lib = biz(get_results(fxn_type(biz_name,dest_city,dest_state_ab)))
 	else:
-		user_choice = raw_input("Sorry that wasn't a choice, please try again: ")
+		lib = biz(get_results(fxn_type(dest_city,dest_state_ab)))
+	user_choice = raw_input("What restaurants did you want to visit? Type name of restaurant: ")
+	user_complete = False
+	while user_complete != True:
+		if user_choice in lib:
+			user_picks.append(lib[user_choice])
+			user_choice = raw_input("What other restaurants did you want to visit? When done type exit ")
+		elif user_choice in user_picks:
+			user_choice = raw_input("Oops you already picked that restaurant. Please choose another restaurant. ")
+		elif user_choice == "exit":
+			user_complete = True
+		else:
+			user_choice = raw_input("Sorry that wasn't a choice, please try again: ")
+
+### This part works! Get user city and state
+
+
+
+
+search_complete = False
+while search_complete != True:
+	dest_city = raw_input("What city do you want to plan for? ") # save the city
+	dest_state = raw_input("What state is this? ").lower() # save the state
+
+	# set dest_state_ab to the lowercase abrevation of state
+	valid_state = False
+
+	while valid_state != True:
+		if dest_state in states: # if user input is a valid state abs then set to dest_state_ab
+			dest_state_ab = dest_state
+			valid_state = True
+		elif dest_state in states_to_ab: # use state dic to convert to abrevation
+			dest_state_ab = states_to_ab[dest_state]
+			valid_state = True
+		else:
+			dest_state = raw_input("Please enter a valid state ").lower()
+
+		search_type = None
+		while search_type != "top restaurants" and search_type != "business name" and search_type != "map":
+			search_type = raw_input("What type of search would you like to complete? \n - Top Restaurants \n - Business Name: \n - When ready for your map, type Map \n").lower()
+			if search_type == "top restaurants":
+				user_choice(dest_city,dest_state_ab,yelp_rest_search)
+				search_type = None
+			elif search_type == "business name":
+				biz_name = raw_input("What is the name of the restaurant you want to search? ")
+				user_choice(dest_city,dest_state_ab,yelp_biz_search,biz_name)
+				search_type  = None
+			elif search_type == "map":
+				search_complete = True
+			else:
+				print "Please pick Top Restaurants or Business Name: "
 
 
 # lib  = biz(get_results(yelp_rest_search("oakland","ca"))) #testing 
 # user_picks = ["Ba-Bite","Smelly's Creole & Soul Food"] #testing
 
-# Generates markers
+### Generates markers
+
 coordinate_markers = ""
-for rest in user_picks:
-	coordinate_markers += "&markers=color:red%7Clabel:A%7C"+str(lib[rest].coordinate[0])+","+str(lib[rest].coordinate[1])
+for biz in user_picks:
+	coordinate_markers += "&markers=color:red%7Clabel:A%7C"+str(biz.coordinate[0])+","+str(biz.coordinate[1])
 
 url = "https://maps.googleapis.com/maps/api/staticmap?center="+dest_city+","+dest_state_ab+"&zoom=12&size=600x300&maptype=roadmap"+coordinate_markers+"&key="+google_api_key
 
@@ -75,3 +103,5 @@ maps.show()
 
 # for c in range(len(user_picks)): # Shows a list to the user of the restaurants they chose
 # 	print user_picks[c].name
+
+
