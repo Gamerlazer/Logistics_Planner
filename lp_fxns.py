@@ -17,7 +17,7 @@ def yelp_rest_search(dest_city,dest_state_ab):
 	params["term"] = "restaurants"
 	params["location"] = dest_city+", "+dest_state_ab
 	params["sort"] = "2"
-	params["limit"] = "5" # number of results
+	params["limit"] = "10" # number of results
 	params["category_filter"] = "restaurants"
 	return params
 	
@@ -48,7 +48,7 @@ class Business(object):
 def biz(query):
 	biz_list_results = {}
 	for biz in query["businesses"]:
-		print biz["name"]
+		print "\n"+biz["name"]+"\n"
 		street = "" # Clean up address display
 		for i in biz["location"]["display_address"]: 
 			if i == biz["location"]["display_address"][len(biz["location"]["display_address"])-1]: # don't add line break at end of address
@@ -58,8 +58,9 @@ def biz(query):
 			else:
 				street += str(i)+"\n"
 		address = street+city+neighborhood
-		print address
+		print address+"\n"
 		# print biz["url"]
+		print "Rating:", biz["rating"]
 		categories = "" # Clean up category display
 		for cats in biz["categories"]:
 			if cats[0] == biz["categories"][len(biz["categories"])-1][0]: # don't add comma if last of the list
@@ -67,22 +68,14 @@ def biz(query):
 			else: 
 				categories += cats[0]+", "
 		print categories+"\n"
-		biz["name"] = str(biz["name"]) #converts unicode to strings 
+		print "Quick Review: "+biz["snippet_text"]+"\n"
+		print "---"
+		biz["name"] = str(biz["name"]).lower() #converts unicode to strings 
 		# biz_list_results.append(biz["name"]) #adds business to list
 		coordinate = [biz["location"]["coordinate"]["latitude"],biz["location"]["coordinate"]["longitude"]]
 		biz_list_results[biz["name"]] = Business(biz["name"],address,biz["url"],categories,coordinate) #creates a business class for each resturant
 	return biz_list_results	
 
-def user_choices():
-	user_choice = raw_input("What restaurants did you want to visit? Type name of restaurant: ")
-	user_complete = False
-	while user_complete != True:
-		if user_choice in lib:
-			user_picks.append(lib[user_choice])
-			user_choice = raw_input("What other restaurants did you want to visit? When ready for your map, type exit when done with your choices: ")
-		elif user_choice in user_picks:
-			user_choice = raw_input("Oops you already picked that restaurant. Please choose another restaurant. When ready for your map, type exit when done with your choices: ")
-		elif user_choice == "exit":
-			user_complete = True
-		else:
-			user_choice = raw_input("Sorry that wasn't a choice, please try again: ")
+
+
+
