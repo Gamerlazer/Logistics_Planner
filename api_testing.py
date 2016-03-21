@@ -90,7 +90,7 @@ coordinate_markers = ""
 for biz in user_picks:
 	coordinate_markers += "&markers=color:red%7Clabel:Longname_here%7C"+str(biz.coordinate[0])+","+str(biz.coordinate[1])
 
-url = "https://maps.googleapis.com/maps/api/staticmap?center="+dest_city+","+dest_state_ab+"&zoom=12&size=1000x800&maptype=roadmap"+coordinate_markers+"&key="+google_api_key
+url = "https://maps.googleapis.com/maps/api/staticmap?center="+dest_city+","+dest_state_ab+"&zoom=12&size=1000x800&scale=2&maptype=roadmap"+coordinate_markers+"&key="+google_api_key
 
 buffer = StringIO(urllib.urlopen(url).read())
 maps = Image.open(buffer)
